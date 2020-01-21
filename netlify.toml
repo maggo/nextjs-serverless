@@ -1,7 +1,4 @@
 [build]
   publish = "dist/static"
-
-  command = "echo 'default context'"
-
-  # Directory with the serverless Lambda functions to deploy to AWS.
+  command = "npm run deploy-netlify"
   functions = "dist/functions/netlify"
