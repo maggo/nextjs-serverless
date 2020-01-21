@@ -2,23 +2,45 @@
   "functions": {
     "source": "dist/functions",
     "predeploy": [
-      "npm run lint-functions",
-      "npm run lint-app",
-      "npm run typecheck-app",
-      "npm run build-functions",
-      "npm run build-app",
-      "npm run copy-deps",
-      "npm run install-deps"
+      "yarn build-functions",
+      "yarn build-app",
+      "yarn copy-app",
+      "yarn copy-deps"
     ]
   },
   "hosting": {
-    "public": "dist/public",
+    "public": "dist/static",
+    "cleanUrls": true,
     "rewrites": [
       {
-        "source": "**/**",
+        "source": "/ssr",
         "function": "nextApp"
+      },
+      {
+        "source": "/dynamic/*",
+        "function": "nextApp"
+      },
+      {
+        "source": "/folder/*/*",
+        "function": "nextApp"
+      },
+      {
+        "source": "/path/**",
+        "function": "nextApp"
+      },
+      {
+        "source": "/ssg-dynamic/*",
+        "function": "nextApp"
+      },
+      {
+        "source": "/static-dynamic/*",
+        "destination": "/static-dynamic/[id].html"
       }
     ],
-    "predeploy": "npm run build-public"
+    "predeploy": [
+      "yarn build-app",
+      "yarn export-app",
+      "node scripts/rewrite-ssr-pages.js"
+    ]
   }
 }
