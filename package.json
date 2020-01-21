@@ -15,8 +15,9 @@
     "export-app": "next export -o dist/static src/app",
     "copy-app": "cpx \".next/**/*\" \"dist/functions/firebase/.next\" -C && cpx \".next/**/*\" \"dist/functions/netlify/.next\" -C",
     "build-functions": "tsc --project src/functions",
-    "copy-deps": "cpx \"*{package.json,yarn.lock}\" \"dist/functions\" -C",
-    "deploy-netlify": "cross-env NODE_ENV=production npm run preserve"
+    "copy-deps": "cpx \"*{package.json,yarn.lock}\" \"dist/functions/firebase\" -C && cpx \"*{package.json,yarn.lock}\" \"dist/functions/netlify\" -C",
+    "install-deps": "cd dist/functions/netlify && yarn",
+    "deploy-netlify": "cross-env NODE_ENV=production npm run preserve && npm run install-deps"
   },
   "dependencies": {
     "express": "^4.17.1",
