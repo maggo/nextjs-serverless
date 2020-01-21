@@ -7,22 +7,25 @@
   },
   "scripts": {
     "dev": "next src/app",
-    "preserve": "npm run build-functions && npm run build-app && npm run copy-app && npm run export-app && node scripts/rewrite-ssr-pages.js && npm run copy-deps && npm run install-deps",
+    "preserve": "npm run build-functions && npm run build-app && npm run copy-app && npm run export-app && node scripts/rewrite-ssr-pages.js && npm run copy-deps",
     "serve": "cross-env NODE_ENV=production firebase serve",
     "deploy": "cross-env NODE_ENV=production firebase deploy",
     "clean": "rimraf \".next\" && rimraf \"dist/functions\" && rimraf \"dist/static\"",
-    "build-app": "cross-env NODE_ENV=production next build \"src/app\"",
+    "build-app": "next build \"src/app\"",
     "export-app": "next export -o dist/static src/app",
-    "copy-app": "cpx \".next/**/*\" \"dist/functions/.next\" -C",
+    "copy-app": "cpx \".next/**/*\" \"dist/functions/firebase/.next\" -C && cpx \".next/**/*\" \"dist/functions/netlify/.next\" -C",
     "build-functions": "tsc --project src/functions",
-    "copy-deps": "cpx \"*{package.json,yarn.lock}\" \"dist/functions\" -C"
+    "copy-deps": "cpx \"*{package.json,yarn.lock}\" \"dist/functions\" -C",
+    "deploy-netlify": "cross-env NODE_ENV=production npm run preserve"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "firebase-admin": "^8.9.0",
     "firebase-functions": "^3.1.0",
     "next": "^9.2.0",
     "react": "16.12.0",
-    "react-dom": "16.12.0"
+    "react-dom": "16.12.0",
+    "serverless-http": "^2.3.0"
   },
   "devDependencies": {
     "@types/node": "13.1.8",
