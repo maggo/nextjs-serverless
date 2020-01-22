@@ -29,8 +29,11 @@ function nextRouteToGlob(route) {
 
 // Filter out existing next rewrite routes
 const dynamicSourceRoutes = dynamicRoutes.map(nextRouteToGlob);
+const ssrSourceRoutes = ssrRoutes.map(nextRouteToGlob);
 const cleanFirebaseRewrites = (firebaseConfig.hosting.rewrites || []).filter(
-  rewrite => !dynamicSourceRoutes.includes(rewrite.source)
+  rewrite =>
+    !dynamicSourceRoutes.includes(rewrite.source) &&
+    !ssrSourceRoutes.includes(rewrite.source)
 );
 
 // Generate firebase rewrite rules for static and SSR routes, with clean rules in the front

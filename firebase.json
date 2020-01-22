@@ -1,6 +1,6 @@
 {
   "functions": {
-    "source": "dist/functions",
+    "source": "dist/functions/firebase",
     "predeploy": [
       "yarn build-functions",
       "yarn build-app",

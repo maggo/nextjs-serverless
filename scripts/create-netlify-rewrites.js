@@ -24,20 +24,25 @@ const ssrRoutes = Object.entries(pages)
   .map(([route]) => route);
 
 // [foo] becomes *, [...foo] becomes **
-function nextRouteToGlob(route) {
-  return route.replace(/\[\.\.\.[^\]]*\]/gi, "**").replace(/\[[^\]]*\]/gi, "*");
+function nextRouteToNetlifyPath(route) {
+  return route
+    .replace(/\[\.\.\.[^\]]*\]/gi, "*")
+    .replace(/\[([^\]]*)\]/gi, ":$1");
 }
 
 // Filter out existing next rewrite routes
-const dynamicSourceRoutes = dynamicRoutes.map(nextRouteToGlob);
+const dynamicSourceRoutes = dynamicRoutes.map(nextRouteToNetlifyPath);
+const ssrSourceRoutes = ssrRoutes.map(nextRouteToNetlifyPath);
 const cleanNetlifyRewrites = (netlifyConfig.redirects || []).filter(
-  redirect => !dynamicSourceRoutes.includes(redirect.from)
+  redirect =>
+    !dynamicSourceRoutes.includes(redirect.from) &&
+    !ssrSourceRoutes.includes(redirect.from)
 );
 
 // Generate netlify redirect rules for static and SSR routes, with clean rules in the front
 const redirects = cleanNetlifyRewrites.concat(
   ssrRoutes.map(route => ({
-    from: nextRouteToGlob(route),
+    from: nextRouteToNetlifyPath(route),
     to: "/.netlify/functions/nextApp",
     status: 200,
     force: true
@@ -45,7 +50,7 @@ const redirects = cleanNetlifyRewrites.concat(
   dynamicRoutes
     .filter(route => !ssrRoutes.includes(route))
     .map(route => ({
-      from: nextRouteToGlob(route),
+      from: nextRouteToNetlifyPath(route),
       to: route + ".html",
       status: 200,
       force: true
