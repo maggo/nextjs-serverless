@@ -2,4 +2,4 @@
   publish = "dist/static"
   command = "npm run deploy-netlify"
   functions = "dist/functions/netlify-dist"
-  environment = { NETLIFY_FUNCTION_ENV: "production" }
+  environment = { NETLIFY_FUNCTION_ENV = "production" }
