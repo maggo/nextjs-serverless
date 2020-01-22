@@ -11259,6 +11259,11 @@ toidentifier@1.0.0:
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
+toml-js@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/toml-js/-/toml-js-0.0.8.tgz#648ea6f1a4d63b19c0bb30b8ed03e40d09473b0a"
+  integrity sha1-ZI6m8aTWOxnAuzC47QPkDQlHOwo=
+
 tough-cookie@~2.4.3:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.4.3.tgz#53f36da3f47783b0925afa06ff9f3b165280f781"

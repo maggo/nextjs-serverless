@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next src/app",
-    "preserve": "npm run build-functions && npm run build-app && npm run copy-app && npm run export-app && node scripts/rewrite-ssr-pages.js && npm run copy-deps",
+    "preserve": "npm run build-functions && npm run build-app && npm run copy-app && npm run export-app && node scripts/delete-ssr-exports.js && node scripts/create-firebase-rewrites.js && node scripts/create-netlify-rewrites.js && npm run copy-deps",
     "serve": "cross-env NODE_ENV=production firebase serve",
     "deploy": "cross-env NODE_ENV=production firebase deploy",
     "clean": "rimraf \".next\" && rimraf \"dist/functions\" && rimraf \"dist/static\"",
@@ -20,6 +20,7 @@
     "deploy-netlify": "npm run preserve && npm run bundle-netlify-functions"
   },
   "dependencies": {
+    "@iarna/toml": "^2.2.3",
     "express": "^4.17.1",
     "firebase-admin": "^8.9.0",
     "firebase-functions": "^3.1.0",
@@ -37,6 +38,7 @@
     "firebase-tools": "^7.1.0",
     "netlify-cli": "^2.30.0",
     "rimraf": "3.0.0",
+    "toml-js": "^0.0.8",
     "tslint": "^6.0.0",
     "tslint-react": "^4.2.0",
     "typescript": "^3.2.0"

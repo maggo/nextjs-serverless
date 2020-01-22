@@ -1,5 +1,31 @@
 [build]
-  publish = "dist/static"
-  command = "npm run deploy-netlify"
-  functions = "dist/functions/netlify-dist"
-  environment = { NETLIFY_FUNCTION_ENV = "production" }
+publish = "dist/static"
+command = "npm run deploy-netlify"
+functions = "dist/functions/netlify-dist"
+
+  [build.environment]
+  NETLIFY_FUNCTION_ENV = "production"
+
+[[redirects]]
+from = "foo"
+to = "bar"
+
+[[rewrites]]
+from = "/dynamic/*"
+to = "/.netlify/functions/nextApp"
+
+[[rewrites]]
+from = "/folder/*/*"
+to = "/.netlify/functions/nextApp"
+
+[[rewrites]]
+from = "/path/**"
+to = "/.netlify/functions/nextApp"
+
+[[rewrites]]
+from = "/ssg-dynamic/*"
+to = "/.netlify/functions/nextApp"
+
+[[rewrites]]
+from = "/static-dynamic/*"
+to = "/static-dynamic/[id].html"

@@ -40,7 +40,8 @@
     "predeploy": [
       "yarn build-app",
       "yarn export-app",
-      "node scripts/rewrite-ssr-pages.js"
+      "node scripts/delete-ssr-exports.js",
+      "node scripts/create-firebase-rewrites.js"
     ]
   }
 }
