@@ -13,10 +13,6 @@
     "cleanUrls": true,
     "rewrites": [
       {
-        "source": "/ssr",
-        "function": "nextApp"
-      },
-      {
         "source": "/dynamic/*",
         "function": "nextApp"
       },
@@ -30,6 +26,10 @@
       },
       {
         "source": "/ssg-dynamic/*",
+        "function": "nextApp"
+      },
+      {
+        "source": "/ssr",
         "function": "nextApp"
       },
       {

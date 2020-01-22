@@ -7,25 +7,37 @@ functions = "dist/functions/netlify-dist"
   NETLIFY_FUNCTION_ENV = "production"
 
 [[redirects]]
-from = "foo"
-to = "bar"
-
-[[rewrites]]
 from = "/dynamic/*"
 to = "/.netlify/functions/nextApp"
+status = 200
+force = true
 
-[[rewrites]]
+[[redirects]]
 from = "/folder/*/*"
 to = "/.netlify/functions/nextApp"
+status = 200
+force = true
 
-[[rewrites]]
+[[redirects]]
 from = "/path/**"
 to = "/.netlify/functions/nextApp"
+status = 200
+force = true
 
-[[rewrites]]
+[[redirects]]
 from = "/ssg-dynamic/*"
 to = "/.netlify/functions/nextApp"
+status = 200
+force = true
 
-[[rewrites]]
+[[redirects]]
+from = "/ssr"
+to = "/.netlify/functions/nextApp"
+status = 200
+force = true
+
+[[redirects]]
 from = "/static-dynamic/*"
 to = "/static-dynamic/[id].html"
+status = 200
+force = true

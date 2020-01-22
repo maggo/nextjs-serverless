@@ -30,29 +30,29 @@ function nextRouteToGlob(route) {
 
 // Filter out existing next rewrite routes
 const dynamicSourceRoutes = dynamicRoutes.map(nextRouteToGlob);
-const cleanNetlifyRewrites = (netlifyConfig.rewrites || []).filter(
-  rewrite => !dynamicSourceRoutes.includes(rewrite.from)
+const cleanNetlifyRewrites = (netlifyConfig.redirects || []).filter(
+  redirect => !dynamicSourceRoutes.includes(redirect.from)
 );
 
-// Generate netlify rewrite rules for static and SSR routes, with clean rules in the front
-const rewrites = cleanNetlifyRewrites.concat(
-  dynamicRoutes.map(route => {
-    // [foo] becomes *, [...foo] becomes **
-    const from = nextRouteToGlob(route);
-
-    return ssrRoutes.includes(route)
-      ? {
-          from,
-          to: "/.netlify/functions/nextApp"
-        }
-      : {
-          from,
-          to: route + ".html"
-        };
-  })
+// Generate netlify redirect rules for static and SSR routes, with clean rules in the front
+const redirects = cleanNetlifyRewrites.concat(
+  ssrRoutes.map(route => ({
+    from: nextRouteToGlob(route),
+    to: "/.netlify/functions/nextApp",
+    status: 200,
+    force: true
+  })),
+  dynamicRoutes
+    .filter(route => !ssrRoutes.includes(route))
+    .map(route => ({
+      from: nextRouteToGlob(route),
+      to: route + ".html",
+      status: 200,
+      force: true
+    }))
 );
 
-const newNetlifyConfig = { ...netlifyConfig, rewrites };
+const newNetlifyConfig = { ...netlifyConfig, redirects };
 
 fs.writeFileSync("netlify.toml", toml.stringify(newNetlifyConfig));
 
