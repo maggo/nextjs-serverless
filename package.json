@@ -1,7 +1,7 @@
 {
-  "name": "with-firebase-hosting-and-typescript",
+  "name": "nextjs-serverless",
   "version": "1.0.0",
-  "description": "Host Next.js SSR app on Firebase Cloud Functions with Firebase Hosting redirects. Built with typescript.",
+  "description": "Testing nextjs deployments on firebase and netlify",
   "engines": {
     "node": "10"
   },
@@ -13,13 +13,14 @@
     "clean": "rimraf \".next\" && rimraf \"dist/functions\" && rimraf \"dist/static\"",
     "build-app": "next build \"src/app\"",
     "export-app": "next export -o dist/static src/app",
-    "copy-app": "cpx \".next/**/*\" \"dist/functions/firebase/.next\" -C && cpx \".next/**/*\" \"dist/functions/netlify/.next\" -C",
+    "copy-app": "cpx \".next/**/*\" \"dist/functions/firebase/.next\" -C && cpx \".next/**/*\" \"dist/functions/netlify/nextApp/next\" -C",
     "build-functions": "tsc --project src/functions",
     "copy-deps": "cpx \"*{package.json,yarn.lock}\" \"dist/functions/firebase\" -C && cpx \"*{package.json,yarn.lock}\" \"dist/functions/netlify\" -C",
-    "install-deps": "cd dist/functions/netlify && yarn",
-    "deploy-netlify": "cross-env NODE_ENV=production npm run preserve && npm run install-deps"
+    "bundle-netlify-functions": "yarn netlify functions:build --src dist/functions/netlify",
+    "deploy-netlify": "cross-env NODE_ENV=production npm run preserve && npm run bundle-netlify-functions"
   },
   "dependencies": {
+    "@netlify/zip-it-and-ship-it": "netlify/zip-it-and-ship-it#v0.4.0-8",
     "express": "^4.17.1",
     "firebase-admin": "^8.9.0",
     "firebase-functions": "^3.1.0",
@@ -35,6 +36,7 @@
     "cpx": "1.5.0",
     "cross-env": "6.0.3",
     "firebase-tools": "^7.1.0",
+    "netlify-cli": "^2.30.0",
     "rimraf": "3.0.0",
     "tslint": "^5.11.0",
     "tslint-react": "^4.1.0",

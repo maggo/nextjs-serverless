@@ -2,7 +2,7 @@ import next from "next";
 import serverless from "serverless-http";
 
 const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
+const app = next({ dev, conf: { distDir: "next" } });
 const handle = app.getRequestHandler();
 
 export const handler = serverless(async (req: any, res: any) => {

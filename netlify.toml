@@ -1,4 +1,4 @@
 [build]
   publish = "dist/static"
   command = "npm run deploy-netlify"
-  functions = "dist/functions/netlify"
+  functions = "dist/functions/netlify-dist"
