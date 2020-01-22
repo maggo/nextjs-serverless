@@ -11,13 +11,13 @@
     "serve": "cross-env NODE_ENV=production firebase serve",
     "deploy": "cross-env NODE_ENV=production firebase deploy",
     "clean": "rimraf \".next\" && rimraf \"dist/functions\" && rimraf \"dist/static\"",
-    "build-app": "next build \"src/app\"",
+    "build-app": "cross-env NODE_ENV=production next build \"src/app\"",
     "export-app": "next export -o dist/static src/app",
     "copy-app": "cpx \".next/**/*\" \"dist/functions/firebase/next\" -C && cpx \".next/**/*\" \"dist/functions/netlify/nextApp/next\" -C",
     "build-functions": "tsc --project src/functions",
     "copy-deps": "cpx \"*{package.json,yarn.lock}\" \"dist/functions/firebase\" -C",
     "bundle-netlify-functions": "yarn netlify functions:build --src dist/functions/netlify",
-    "deploy-netlify": "cross-env NODE_ENV=production npm run preserve && npm run bundle-netlify-functions"
+    "deploy-netlify": "npm run preserve && npm run bundle-netlify-functions"
   },
   "dependencies": {
     "express": "^4.17.1",
