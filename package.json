@@ -17,7 +17,6 @@
     "copy-app": "cpx \".next/**/*\" \"dist/functions/firebase/next\" -C && cpx \".next/**/*\" \"dist/functions/netlify/nextApp/next\" -C",
     "build-functions": "tsc --project src/functions",
     "copy-deps": "cpx \"*{package.json,yarn.lock}\" \"dist/functions/firebase\" -C",
-    "bundle-netlify-functions": "yarn netlify functions:build --src dist/functions/netlify",
     "deploy-netlify": "npm run preserve"
   },
   "dependencies": {
