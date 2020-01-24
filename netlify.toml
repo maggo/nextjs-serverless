@@ -1,7 +1,7 @@
 [build]
 publish = "dist/static"
 command = "npm run deploy-netlify"
-functions = "dist/functions/netlify-dist"
+functions = "dist/functions/netlify"
 
   [build.environment]
   NETLIFY_FUNCTION_ENV = "production"
