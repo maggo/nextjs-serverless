@@ -23,7 +23,7 @@ const ssrRoutes = Object.entries(pages)
   )
   .map(([route]) => route);
 
-// [foo] becomes *, [...foo] becomes **
+// [foo] becomes :foo, [...foo] becomes *
 function nextRouteToNetlifyPath(route) {
   return route
     .replace(/\[\.\.\.[^\]]*\]/gi, "*")
