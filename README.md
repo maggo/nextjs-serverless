@@ -29,8 +29,8 @@ Deployments are done with the following steps:
 
 The demo site is deployed to both firebase and netlify:
 
-https://nextjs-serverless.netlify.com
-https://fir-nextjs-test.firebaseapp.com
+- https://nextjs-serverless.netlify.com
+- https://fir-nextjs-test.firebaseapp.com
 
 All pages should work both as a SPA and requested from the server (refresh)
 
