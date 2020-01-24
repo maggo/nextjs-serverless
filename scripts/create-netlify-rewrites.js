@@ -44,16 +44,14 @@ const redirects = cleanNetlifyRewrites.concat(
   ssrRoutes.map(route => ({
     from: nextRouteToNetlifyPath(route),
     to: "/.netlify/functions/nextApp",
-    status: 200,
-    force: true
+    status: 200
   })),
   dynamicRoutes
     .filter(route => !ssrRoutes.includes(route))
     .map(route => ({
       from: nextRouteToNetlifyPath(route),
       to: route + ".html",
-      status: 200,
-      force: true
+      status: 200
     }))
 );
 
