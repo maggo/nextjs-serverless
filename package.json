@@ -17,7 +17,7 @@
     "build-functions": "tsc --project src/functions",
     "copy-deps": "cpx \"*{package.json,yarn.lock}\" \"dist/functions/firebase\" -C",
     "bundle-netlify-functions": "yarn netlify functions:build --src dist/functions/netlify",
-    "deploy-netlify": "npm run preserve && npm run bundle-netlify-functions"
+    "deploy-netlify": "npm run preserve"
   },
   "dependencies": {
     "@iarna/toml": "^2.2.3",
@@ -35,12 +35,18 @@
     "@types/react-dom": "16.9.5",
     "cpx": "1.5.0",
     "cross-env": "6.0.3",
+    "fibers": "^4.0.2",
     "firebase-tools": "^7.1.0",
     "netlify-cli": "^2.30.0",
+    "node-sass": "^4.13.1",
     "rimraf": "3.0.0",
+    "sass": "^1.25.0",
     "toml-js": "^0.0.8",
     "tslint": "^6.0.0",
     "tslint-react": "^4.2.0",
     "typescript": "^3.2.0"
-  }
+  },
+  "files": [
+    "next"
+  ]
 }
