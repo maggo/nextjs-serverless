@@ -14,6 +14,10 @@ const DynamicPage: NextPage<Props> = ({ date }) => {
         This is a prerendered page generated at {date} with dynamic url{" "}
         {router.query.id}
       </h1>
+      <p>
+        You can change the last segment of the URL, new pages should be
+        generated and even cached if the hoster supports it
+      </p>
     </>
   );
 };

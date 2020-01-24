@@ -31,6 +31,16 @@ const IndexPage: NextPage = () => (
           <a>Path page</a>
         </Link>
       </li>
+      <li>
+        <Link href="/ssg-dynamic/[id]" as="/ssg-dynamic/1">
+          <a>Statically generated page with dynamic path</a>
+        </Link>
+      </li>
+      <li>
+        <Link href="/static-dynamic/[id]" as="/static-dynamic/1">
+          <a>Prerendered page with dynamic path</a>
+        </Link>
+      </li>
     </ul>
   </>
 );
