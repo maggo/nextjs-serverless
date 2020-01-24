@@ -1,76 +1,37 @@
-# With Firebase Hosting and Typescript example
+# nextjs-serverless POC
 
-The goal is to host the Next.js app on Firebase Cloud Functions with Firebase Hosting rewrite rules so our app is served from our Firebase Hosting URL, with a complete Typescript stack for both the Next app and for the Firebase Functions. Each individual `page` bundle is served in a new call to the Cloud Function which performs the initial server render.
+This project aims to make deployments of nextjs apps as easy as possible!
 
-This is based off of the work of @jthegedus in the [with-firebase-hosting](https://github.com/zeit/next.js/tree/canary/examples/with-firebase-hosting) example.
+## The problem
 
-If you're having issues, feel free to tag @sampsonjoliver in the [issue you create on the next.js repo](https://github.com/zeit/next.js/issues/new)
+While there are examples on how to deploy nextjs to firebase hosting and functions, they're set up in a way that _every_ request is routed through the function. This is suboptimal as nextjs itself is able to automatically prerender pages that are completely static and could therefor be served from a CDN together with all static assets.
 
-## How to use
+The only hosting service that offers full nextjs compatibility out of the box is Zeit's own now service.
 
-### Using `create-next-app`
+## The task
 
-Execute [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+Develop a setup that enables the user to deploy a nextjs application to firebase hosting and function with full CDN coverage for static pages and assets.
 
-```bash
-npm init next-app --example with-firebase-hosting-and-typescript with-firebase-hosting-and-typescript-app
-# or
-yarn create next-app --example with-firebase-hosting-and-typescript with-firebase-hosting-and-typescript-app
-```
+As an added bonus this setup could also work as they're offering CDN hosting and functions.
 
-### Download manually
+## The solution
 
-Download the example:
+Deployments are done with the following steps:
 
-```bash
-curl https://codeload.github.com/zeit/next.js/tar.gz/canary | tar -xz --strip=2 next.js-canary/examples/with-firebase-hosting-and-typescript
-cd with-firebase-hosting-and-typescript
-```
+1. Build the functions (See `src/functions`)
+2. Build the nextjs app (`next build`)
+3. Copy the build to the function directories so they're bundled
+4. Export the app to `dist/static` (`next export`)
+5. Delete all exported pages that are not 100% static for firebase rewrite compatibility, based on build manifests (`node scripts/delete-ssr-exports.js`)
+6. Create rewrite rules for dynamic and SSR pages mirroring the routes defined in nextjs, based on build manifests (`node scripts/create-{firebase,netlify}-rewrites.js`)
 
-Set up firebase:
+## Demo
 
-- install Firebase Tools: `npm i -g firebase-tools`
-- create a project through the [firebase web console](https://console.firebase.google.com/)
-- grab the projects ID from the web consoles URL: https://console.firebase.google.com/project/<projectId>
-- update the `.firebaserc` default project ID to the newly created project
-- login to the Firebase CLI tool with `firebase login`
+The demo site is deployed to both firebase and netlify:
 
-#### Install project:
+https://nextjs-serverless.netlify.com
+https://fir-nextjs-test.firebaseapp.com
 
-```bash
-npm install
-```
+All pages should work both as a SPA and requested from the server (refresh)
 
-#### Run Next.js development:
-
-```bash
-npm run dev
-```
-
-#### Run Firebase locally for testing:
-
-```
-npm run serve
-```
-
-#### Deploy it to the cloud with Firebase:
-
-```bash
-npm run deploy
-```
-
-#### Clean dist folder
-
-```bash
-npm run clean
-```
-
-## Important
-
-- The empty `placeholder.html` file is so Firebase Hosting does not error on an empty `public/` folder and still hosts at the Firebase project URL.
-- `firebase.json` outlines the catchall rewrite rule for our Cloud Function.
-- The [Firebase predeploy](https://firebase.google.com/docs/cli/#predeploy_and_postdeploy_hooks) hooks defined in `firebase.json` will handle linting and compiling of the next app and the functions sourceswhen `firebase deploy` is invoked. The only scripts you should need are `dev`, `clean` and `deploy`.
-- Specifying [`"engines": {"node": "8"}`](package.json#L5-L7) in the `package.json` is required for firebase functions
-  to be deployed on Node 8 rather than Node 6
-  ([Firebase Blog Announcement](https://firebase.googleblog.com/2018/08/cloud-functions-for-firebase-config-node-8-timeout-memory-region.html))
-  . This is matched in by specifying target as `es2017` in [`src/functions/tsconfig.json`](src/functions/tsconfig) so that typescript output somewhat compacter and moderner code.
+Static assets and pages are hosted from CDN while pages like https://fir-nextjs-test.firebaseapp.com/ssr are served through a function.
