@@ -3,7 +3,12 @@ import Link from "next/link";
 
 const IndexPage: NextPage = () => (
   <>
-    <h1>Hello world</h1>
+    <h1>nextjs-serverless</h1>
+    <p>
+      With this website you can test server-side rendered, statically generated
+      and static nextjs pages on different hosters.
+    </p>
+    <hr />
     <p>This page is static because there are no initial props.</p>
     <ul>
       <li>
