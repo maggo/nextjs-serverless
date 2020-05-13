@@ -17,7 +17,8 @@
     "copy-app": "cpx \".next/**/*\" \"dist/functions/firebase/next\" -C && cpx \".next/**/*\" \"dist/functions/netlify/nextApp/next\" -C",
     "build-functions": "tsc --project src/functions",
     "copy-deps": "cpx \"*{package.json,yarn.lock}\" \"dist/functions/firebase\" -C",
-    "deploy-netlify": "npm run preserve"
+    "deploy-netlify": "npm run preserve",
+    "now-build": "next build \"src/app\""
   },
   "dependencies": {
     "firebase-admin": "^8.12.1",
