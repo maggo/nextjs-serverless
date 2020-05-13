@@ -31,7 +31,7 @@ export async function getStaticProps() {
 }
 
 export async function getStaticPaths() {
-  return [{ params: { id: "1" } }];
+  return { paths: [{ params: { id: "1" } }], fallback: true };
 }
 
 export default DynamicPage;
