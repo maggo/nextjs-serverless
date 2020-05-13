@@ -15,6 +15,8 @@ const DynamicPathPage: NextPage = () => {
   );
 };
 
-DynamicPathPage.getInitialProps = () => ({});
+DynamicPathPage.getInitialProps = () => ({
+  foo: "bar",
+});
 
 export default DynamicPathPage;

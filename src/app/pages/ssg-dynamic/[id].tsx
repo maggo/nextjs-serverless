@@ -22,16 +22,16 @@ const DynamicPage: NextPage<Props> = ({ date }) => {
   );
 };
 
-export async function unstable_getStaticProps() {
+export async function getStaticProps() {
   return {
     props: {
-      date: new Date().toISOString()
-    }
+      date: new Date().toISOString(),
+    },
   };
 }
 
-export async function unstable_getStaticPaths() {
-  return [{ params: { id: "1" } }];
+export async function getStaticPaths() {
+  return { paths: [{ params: { id: "1" } }], fallback: true };
 }
 
 export default DynamicPage;

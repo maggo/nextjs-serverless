@@ -1,6 +1,6 @@
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const DynamicPage: NextPage = () => {
   const router = useRouter();
@@ -26,6 +26,8 @@ const DynamicPage: NextPage = () => {
   );
 };
 
-DynamicPage.getInitialProps = () => ({});
+DynamicPage.getInitialProps = () => ({
+  foo: "bar",
+});
 
 export default DynamicPage;

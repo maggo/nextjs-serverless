@@ -4,43 +4,44 @@
   "version": "1.0.0",
   "description": "Testing nextjs deployments on firebase and netlify",
   "engines": {
-    "node": "10"
+    "node": "12.x"
   },
   "scripts": {
     "dev": "next src/app",
     "preserve": "npm run build-functions && npm run build-app && npm run copy-app && npm run export-app && node scripts/delete-ssr-exports.js && node scripts/create-firebase-rewrites.js && node scripts/create-netlify-rewrites.js && npm run copy-deps",
     "serve": "cross-env NODE_ENV=production firebase serve",
     "deploy": "cross-env NODE_ENV=production firebase deploy",
-    "clean": "rimraf \".next\" && rimraf \"dist/functions\" && rimraf \"dist/static\"",
+    "clean": "rimraf \".next\" \"dist\" \".netlify\" \".firebase\"",
     "build-app": "cross-env NODE_ENV=production next build \"src/app\"",
     "export-app": "next export -o dist/static src/app",
     "copy-app": "cpx \".next/**/*\" \"dist/functions/firebase/next\" -C && cpx \".next/**/*\" \"dist/functions/netlify/nextApp/next\" -C",
     "build-functions": "tsc --project src/functions",
     "copy-deps": "cpx \"*{package.json,yarn.lock}\" \"dist/functions/firebase\" -C",
-    "deploy-netlify": "npm run preserve"
+    "deploy-netlify": "npm run preserve",
+    "now-build": "next build \"src/app\""
   },
   "dependencies": {
-    "firebase-admin": "^8.9.2",
-    "firebase-functions": "^3.3.0",
-    "next": "^9.2.1",
-    "react": "16.12.0",
-    "react-dom": "16.12.0",
-    "serverless-http": "^2.3.0"
+    "firebase-admin": "^8.12.1",
+    "firebase-functions": "^3.6.1",
+    "next": "^9.4.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "serverless-http": "^2.4.1"
   },
   "devDependencies": {
-    "@iarna/toml": "^2.2.3",
-    "@types/node": "13.5.0",
-    "@types/react": "^16.9.19",
-    "@types/react-dom": "16.9.5",
+    "@iarna/toml": "^2.2.5",
+    "@types/node": "14.0.1",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "16.9.8",
     "cpx": "1.5.0",
-    "cross-env": "6.0.3",
-    "fibers": "^4.0.2",
-    "firebase-tools": "^7.1.0",
-    "netlify-cli": "^2.30.0",
-    "node-sass": "^4.13.1",
-    "rimraf": "3.0.0",
-    "sass": "^1.25.0",
-    "typescript": "^3.2.0"
+    "cross-env": "7.0.2",
+    "fibers": "^5.0.0",
+    "firebase-tools": "^8.2.0",
+    "netlify-cli": "^2.51.0",
+    "node-sass": "^4.14.1",
+    "rimraf": "3.0.2",
+    "sass": "^1.26.5",
+    "typescript": "^3.9.2"
   },
   "files": [
     "next"
